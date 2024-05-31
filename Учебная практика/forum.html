@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Cards</title>
+    <style>
+        .card { /* стили для карточек */ }
+        .card__img { /* стили для изображений */ }
+        .cardname, .cardage, .cardbreed, .cardcost { /* стили для текста */ }
+        .card__button { /* стили для кнопок */ }
+        #animalDetails { display: none; } /* скрытый блок для детальной информации */
+    </style>
+</head>
+<body>
+<div id="animalList"></div>
+<div id="animalDetails">
+    <button id="backButton">Назад</button>
+    <img id="detailImg" src="" alt="">
+    <span id="detailSpecies"></span>
+    <span id="detailBreed"></span>
+    <span id="detailAge"></span>
+    <span id="detailCost"></span>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const animals = [
+            { species: "Собака", breed: "Лабрадор", age: 3, cost: 100, photo: "./images/img1.jpg" },
+            { species: "Кошка", breed: "Персидская", age: 2, cost: 150, photo: "./images/img2.jpg" },
+            // другие животные
+        ];
+        const animalList = document.getElementById('animalList');
+        const animalDetails = document.getElementById('animalDetails');
+        const backButton = document.getElementById('backButton');
+
+        function displayAnimals(animals) {
+            animalList.innerHTML = '';
+            animals.forEach(animal => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                const img = document.createElement('img');
+                img.src = animal.photo;
+                img.alt = animal.species;
+                img.className = 'card__img';
+                const species = document.createElement('span');
+                species.textContent = Вид: ${animal.species};
+                species.className = 'card__name';
+                const breed = document.createElement('span');
+                breed.textContent = Порода: ${animal.breed};
+                const age = document.createElement('span');
+                age.textContent = Возраст: ${animal.age} года;
+                age.className = 'card__age';
+                const cost = document.createElement('span');
+                cost.textContent = Цена: ${animal.cost} сом;
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = 'Узнать больше';
+                button.className = 'card__button';
+                button.addEventListener('click', () => showAnimalDetails(animal));
+                card.appendChild(img);
+                card.appendChild(species);
+                card.appendChild(breed);
+                card.appendChild(age);
+                card.appendChild(cost);
+                card.appendChild(button);
+                animalList.appendChild(card);
+            });
+        }
+
+        function showAnimalDetails(animal) {
+            document.getElementById('detailImg').src = animal.photo;
+            document.getElementById('detailImg').alt = animal.species;
+            document.getElementById('detailSpecies').textContent = Вид: ${animal.species};
+            document.getElementById('detailBreed').textContent = Порода: ${animal.breed};
+            document.getElementById('detailAge').textContent = Возраст: ${animal.age} года;
+            document.getElementById('detailCost').textContent = Цена: ${animal.cost} сом;
+
+            animalList.style.display = 'none';
+            animalDetails.style.display = 'block';
+        }
+
+        backButton.addEventListener('click', () => {
+            animalDetails.style.display = 'none';
+            animalList.style.display = 'block';
+        });
+        displayAnimals(animals);
+    });
+</script>
+</body>
+</html>
